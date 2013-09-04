@@ -21,6 +21,8 @@ class DMSPluginPro {
 		
 		$this->base_dir = sprintf( '%s/%s', WP_PLUGIN_DIR,  $basename );
 		
+		$this->lib_dir = sprintf( '%s/%s', $this->base_dir,  '/libs' );
+		
 		$this->base_file = sprintf( '%s/%s/%s', WP_PLUGIN_DIR,  $basename, $filename );
 		
 		$this->init();
@@ -29,6 +31,9 @@ class DMSPluginPro {
 
 	function init(){
 	
+		require_once( $this->lib_dir . '/actions.php' )
+		require_once( $this->lib_dir . '/shortcodes.php' ); 
+		
 	
 	}
 
