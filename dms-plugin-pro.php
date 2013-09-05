@@ -31,7 +31,7 @@ class DMSPluginPro {
 
 	function init(){
 	
-		require_once( $this->lib_dir . '/actions.php' )
+		require_once( $this->lib_dir . '/actions.php' );
 		require_once( $this->lib_dir . '/shortcodes.php' ); 
 		
 	
