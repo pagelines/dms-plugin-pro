@@ -6,7 +6,7 @@ Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
 Version: 1.0.0
 Author: PageLines
-pagelines: true
+PageLines: true
 
 */
 
@@ -27,16 +27,18 @@ class DMSPluginPro {
 		
 		$this->init();
 		
+		add_action( 'after_setup_theme', array( $this, 'run_theme_overrides' ) );
 	}
 
 	function init(){
 	
 		require_once( $this->lib_dir . '/actions.php' );
-		require_once( $this->lib_dir . '/shortcodes.php' ); 
-		
-	
+		require_once( $this->lib_dir . '/shortcodes.php' ); 	
 	}
 
+	function run_theme_overrides() {
+		new PLProShortcodes;
+	}
 }
 
 new DMSPluginPro;
