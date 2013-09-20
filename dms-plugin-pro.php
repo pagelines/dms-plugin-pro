@@ -77,17 +77,34 @@ class DMSPluginPro {
 			<?php 
 			// Output your settings form
 			$this->plpro->settings(); 
-			?>
-		</div>
-		<?php
 
-		// Get settings
-		//$settings = wpsf_get_settings( $this->plugin_path .'settings/settings-general.php' );
-		//echo '<pre>'.print_r($settings,true).'</pre>';
 
-		// Get individual setting
-		//$setting = wpsf_get_setting( wpsf_get_option_group( $this->plugin_path .'settings/settings-general.php' ), 'general', 'text' );
-		//var_dump($setting);
+		if ( '1' == wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'section_cache', 'cache-enabled' ) ) {
+			global $wpdb;
+			
+			
+			$stale = 0;
+
+			$where = "option_name LIKE '\_transient_section_cache%'"; 
+			
+			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE $where" );
+			
+			$count = count( $transients );
+			
+			$cache_key = pl_get_cache_key();
+			
+			foreach( $transients as $k => $name ) {
+				$key = str_replace( '_transient_section_cache_', '', $name );
+				$key = explode( '_', $key );
+				if( $key[0] <> $cache_key ) {
+					$stale++;
+					delete_transient( str_replace( '_transient_', '', $name ) );
+				}
+			}
+			
+			printf( '%s total cache elements found, %s stale were detected and deleted from the db.', $count, $stale );
+		}
+		echo '</div>';
 	}
 
 	function validate_settings( $input )
