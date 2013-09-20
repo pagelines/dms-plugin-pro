@@ -25,6 +25,8 @@ class DMS_Hacks {
 		if( 'live' == $pldraft->mode )
 			return;
 
+		$template = ( false != $plpg->template && '' != $plpg->template ) ? $plpg->template : 'none';
+
 		$wp_admin_bar->add_menu( array(
 			'parent' => false,
 			'id' => 'page_template',

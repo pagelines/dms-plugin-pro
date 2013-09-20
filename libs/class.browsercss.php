@@ -10,6 +10,7 @@ class Browser_Pro_Specific_CSS {
 		$this->useragent = ( isset($_SERVER['HTTP_USER_AGENT'] ) ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		add_filter( 'body_class', array( &$this, 'body_class' ) );
 		
+		add_action( 'the_html_tag', array( $this, 'add_ie_class' ) );
 		if( $this->ie_ver < 9 ) {
 			wp_register_script( 'html5-js', $dmspro_plugin_url . 'libs/js/html5.js', 0, false);			
 			wp_register_script( 'respond-js', $dmspro_plugin_url . 'libs/js/respond.min.js', 0, false);			
@@ -258,15 +259,25 @@ class Browser_Pro_Specific_CSS {
 		if ($is_safari) { $classes[] = 'safari'; }
 		if ($is_chrome) { $classes[] = 'chrome'; }
 		if ($is_IE) { 
-			$this->ie_ver = pl_detect_ie();
-			$extra = ' lte8 lte9';
-			if( '9' == $this->ie_ver ) {
-				$extra = ' lte9';
-			}
-			$classes[] = 'ie ie' . $this->ie_ver . $extra;
+			$classes[] = 'ie ie' . $this->ie_ver;
 		 }
 
 		return $classes;
+	}
+	
+	function add_ie_class() {
+		global $is_IE;
+		if ( ! $is_IE )
+			return;
+		
+		$classes = '';
+		$this->ie_ver;
+		if( $this->ie_ver <= 8 )  {
+			$classes = ' class="ie ie8 lte9 lte8"';
+		} elseif( $this->ie_ver == 9 ) {
+			$classes = ' class="ie ie9 lte9"';
+		}
+		echo $classes;
 	}
 } // end class
 
