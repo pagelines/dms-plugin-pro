@@ -20,17 +20,22 @@ class DMSPluginPro {
 
 	function __construct() {
 		
+		global $dmspro_plugin_url;
         $this->plugin_path = plugin_dir_path( __FILE__ );
         $this->plugin_url = plugin_dir_url( __FILE__ );
+		$dmspro_plugin_url = $this->plugin_url;
+		
 		$this->l10n = 'wp-settings-framework';
 		$this->load_libs();
 		
 		
         add_action( 'admin_menu', array( $this, 'admin_menu'), 99 );
 		add_action( 'template_redirect', array( $this, 'section_cache' ) );
+		add_action( 'template_redirect', array( $this, 'browsercss' ) );
 		add_action( 'init', array( $this, 'memcheck' ) );
-		add_filter( 'render_css_posix_', '__return_true' );
-
+		
+		add_action( 'after_setup_theme', array( $this, 'do_hacks' ) );
+		
 		$this->plpro = new WordPressSettingsFramework( $this->plugin_path .'settings/settings-general.php' );
 		$this->settings = wpsf_get_settings( $this->plugin_path .'settings/settings-general.php' );
 		add_filter( $this->plpro->get_option_group() .'_settings_validate', array( $this, 'validate_settings' ) );
@@ -40,12 +45,22 @@ class DMSPluginPro {
 			define( 'WP_STACK_CDN_DOMAIN', $this->settings['settingsgeneral_cdn_cdn-url'] );
 			define( 'WP_STAGE', 'production' );
 			new WP_Stack_CDN_Plugin;
-		}		
+		}
+	}
+
+	function do_hacks() {
+		new DMS_Hacks;
 	}
 
 	function section_cache() {
-		if( '1' === $this->settings['settingsgeneral_section_cache_cache-enabled'] ) {
+		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'section_cache', 'cache-enabled' ) ) {
 			new Sections_Cache;
+		}
+	}
+	
+	function browsercss() {
+		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'browsercss', 'enabled' ) ) {
+			new Browser_Specific_CSS;
 		}
 	}
 
@@ -57,10 +72,12 @@ class DMSPluginPro {
 
 	function load_libs(){
 
+		require_once( $this->plugin_path . 'libs/class.hacks.php' );
 		require_once( $this->plugin_path . 'libs/class.cdn.libs.php' );
 		require_once( $this->plugin_path . 'libs/wp-settings-framework.php' );
 		require_once( $this->plugin_path . 'libs/class.section.cache.php' );
 		require_once( $this->plugin_path . 'libs/class.memtest.php' );
+		require_once( $this->plugin_path . 'libs/class.browsercss.php' );
 	}
 
     function admin_menu() {
@@ -77,33 +94,6 @@ class DMSPluginPro {
 			<?php 
 			// Output your settings form
 			$this->plpro->settings(); 
-
-
-		if ( '1' == wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'section_cache', 'cache-enabled' ) ) {
-			global $wpdb;
-			
-			
-			$stale = 0;
-
-			$where = "option_name LIKE '\_transient_section_cache%'"; 
-			
-			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE $where" );
-			
-			$count = count( $transients );
-			
-			$cache_key = pl_get_cache_key();
-			
-			foreach( $transients as $k => $name ) {
-				$key = str_replace( '_transient_section_cache_', '', $name );
-				$key = explode( '_', $key );
-				if( $key[0] <> $cache_key ) {
-					$stale++;
-					delete_transient( str_replace( '_transient_', '', $name ) );
-				}
-			}
-			
-			printf( '%s total cache elements found, %s stale were detected and deleted from the db.', $count, $stale );
-		}
 		echo '</div>';
 	}
 
