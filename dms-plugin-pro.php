@@ -44,9 +44,8 @@ class DMSPluginPro {
 			define( 'WP_STAGE', 'production' );
 			new WP_Stack_CDN_Plugin;
 		}
-		new DMS_Hacks;
+		new DMS_Hacks;		
 	}
-
 
 	function section_cache() {
 		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'section_cache', 'cache-enabled' ) ) {
