@@ -1,6 +1,6 @@
 <?php
 
-class Browser_Specific_CSS {
+class Browser_Pro_Specific_CSS {
 	
 	function __construct() {
 		

@@ -60,7 +60,7 @@ class DMSPluginPro {
 	
 	function browsercss() {
 		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'browsercss', 'enabled' ) ) {
-			new Browser_Specific_CSS;
+			new Browser_Pro_Specific_CSS;
 		}
 	}
 
