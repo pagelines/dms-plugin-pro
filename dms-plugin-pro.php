@@ -33,9 +33,7 @@ class DMSPluginPro {
 		add_action( 'template_redirect', array( $this, 'section_cache' ) );
 		add_action( 'template_redirect', array( $this, 'browsercss' ) );
 		add_action( 'init', array( $this, 'memcheck' ) );
-		
-		add_action( 'after_setup_theme', array( $this, 'do_hacks' ) );
-		
+				
 		$this->plpro = new WordPressSettingsFramework( $this->plugin_path .'settings/settings-general.php' );
 		$this->settings = wpsf_get_settings( $this->plugin_path .'settings/settings-general.php' );
 		add_filter( $this->plpro->get_option_group() .'_settings_validate', array( $this, 'validate_settings' ) );
@@ -46,11 +44,9 @@ class DMSPluginPro {
 			define( 'WP_STAGE', 'production' );
 			new WP_Stack_CDN_Plugin;
 		}
-	}
-
-	function do_hacks() {
 		new DMS_Hacks;
 	}
+
 
 	function section_cache() {
 		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'section_cache', 'cache-enabled' ) ) {
@@ -93,7 +89,8 @@ class DMSPluginPro {
 			<h2>PageLines PRO Plugin Settings</h2>
 			<?php 
 			// Output your settings form
-			$this->plpro->settings(); 
+			$this->plpro->settings();
+			do_action( 'dmspro_extra_settings' );
 		echo '</div>';
 	}
 
