@@ -10,7 +10,7 @@ $wpsf_settings[] = array(
 	    array(
             'id' => 'enabled',
             'title' => 'Enable CSS Classes.',
-            'desc' => '<p>This will add classes to the page, for example a desktop PC using firefox would add: <kbd>&lt;body class="home blog ... ... <strong>desktop firefox</strong>"&gt;</kbd><br />Also included are patches supplied by Anca for IE8.</p>',
+            'desc' => '<p>This will add classes to the page, for example a desktop PC using firefox would add: <kbd>&lt;body class="home blog ... ... <strong>desktop firefox</strong>"&gt;</kbd><br />Also included are patches supplied by Anca for IE8.'  . dmspro_browsercss_compat() . '</p>',
             'type' => 'checkbox',
             'std' => 0
         )

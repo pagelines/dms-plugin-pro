@@ -17,7 +17,7 @@ class Browser_Pro_Specific_CSS {
 			wp_enqueue_script( 'html5-js');
 			wp_enqueue_script('selectivizr-min');
 			wp_enqueue_script( 'respond-js');
-		}	
+		}
 	}
 
 
@@ -269,3 +269,22 @@ class Browser_Pro_Specific_CSS {
 		return $classes;
 	}
 } // end class
+
+function dmspro_browsercss_compat() {
+	if ( class_exists( 'Browser_Specific_CSS' ) ) {
+		
+		return '<style>
+		@-webkit-keyframes blinker {  
+		  from { opacity: 1.0; }
+		  to { opacity: 0.0; }
+		}
+		.css3-blink {
+		  -webkit-animation-name: blinker;  
+		  -webkit-animation-iteration-count: infinite;  
+		  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+		  -webkit-animation-duration: 1s;
+		</style>
+		<br /><strong><kbd>!!!<span class="css3-blink" style="color:red">WARNING</span>!!!</kbd> You appear to have the old Browser CSS plugin activated, please deactivate it. <kbd>!!!<span class="css3-blink" style="color:red">WARNING</span>!!!</kbd></strong>';
+		
+	}
+}
