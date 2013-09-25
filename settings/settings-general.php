@@ -38,6 +38,7 @@ $wpsf_settings[] = array(
         ),
     )
 );
+
 $wpsf_settings[] = array(
     'section_id' => 'section_cache',
     'section_title' => 'Section Caching.',

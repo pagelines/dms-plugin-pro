@@ -66,6 +66,9 @@ class WP_Stack_CDN_Plugin extends WP_Stack_Plugin {
 	}
 
 	public function ob( $contents ) {
-			return apply_filters( 'wp_stack_cdn_content', $contents, $this );
+			if( defined( 'PL_WPORG' ) )
+				return $contents;
+			else
+				return apply_filters( 'wp_stack_cdn_content', $contents, $this );
 	}
 }

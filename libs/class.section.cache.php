@@ -8,7 +8,7 @@ class Sections_Cache {
 
 	function section_cache_init( $s, $class ) {
 	
-		if( is_user_logged_in() || 'pl_area' == $s->id || 'plcolumn' == $s->id ) {
+		if( is_user_logged_in() || 'pl_area' == $s->id || 'plcolumn' == $s->id || defined( 'PL_WPORG' ) ) {
 			ob_start();
 			$class->section_template_load( $s );
 			return ob_get_clean();

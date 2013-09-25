@@ -23,8 +23,7 @@ class Browser_Pro_Specific_CSS {
 	}
 
 	function fix_fonts() {
-		if( 9 == $this->ie_ver )
-			echo '<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">';
+		echo '<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">';
 	}
 
 
