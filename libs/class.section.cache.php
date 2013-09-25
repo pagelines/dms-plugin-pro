@@ -8,14 +8,14 @@ class Sections_Cache {
 
 	function section_cache_init( $s, $class ) {
 	
-		if( is_user_logged_in() || 'pl_area' == $s->id || 'plcolumn' == $s->id || defined( 'PL_WPORG' ) ) {
+		global $post;
+		if( is_user_logged_in() || 'pl_area' == $s->id || 'plcolumn' == $s->id || defined( 'PL_WPORG' ) || ! isset( $post->ID )) {
 			ob_start();
 			$class->section_template_load( $s );
 			return ob_get_clean();
 		}
 	return $this->section_cache( $s, 3600, $class );
 	}
-
 
 	function section_cache( $s, $ttl = 3600, $class ) {
 	
@@ -28,7 +28,7 @@ class Sections_Cache {
 	
 		// do cache...
 		$output = get_transient( $key );
-	
+
 		if( '' != $output  ) {
 			echo "<!-- section cache hit -->\n";
 			return $output;
