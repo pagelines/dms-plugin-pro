@@ -11,7 +11,7 @@ class Browser_Pro_Specific_CSS {
 		add_filter( 'body_class', array( &$this, 'body_class' ) );
 		
 		add_action( 'the_html_tag', array( $this, 'add_ie_class' ) );
-		if( $this->ie_ver < 9 ) {
+		if( $this->ie_ver && $this->ie_ver < 9 ) {
 			wp_register_script( 'html5-js', $dmspro_plugin_url . 'libs/js/html5.min.js', 0, false);			
 			wp_register_script( 'respond-js', $dmspro_plugin_url . 'libs/js/respond.min.js', 0, false);			
 			wp_register_script('selectivizr-min', $dmspro_plugin_url . 'libs/js/selectivizr-min.js', 0, false);			
