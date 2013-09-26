@@ -40,7 +40,7 @@ class DMS_Hacks {
 	
 	function advanced_search_query( $where ) {
 
-	  if( is_search() ) {
+	  if( is_search() && '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'search', 'enabled' )) {
 
 	    global $wpdb;
 	    $query = get_search_query();

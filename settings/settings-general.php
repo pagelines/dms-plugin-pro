@@ -55,6 +55,21 @@ $wpsf_settings[] = array(
 );
 
 $wpsf_settings[] = array(
+    'section_id' => 'search',
+    'section_title' => 'Enhanced Search.',
+    'section_order' => 4,
+    'fields' => array(
+	    array(
+            'id' => 'enabled',
+            'title' => 'Search',
+            'desc' => 'Enable WordPress search to look inside section content, eg. textbox/hero/etc.',
+            'type' => 'checkbox',
+            'std' => 1
+        )
+    )
+);
+
+$wpsf_settings[] = array(
     'section_id' => 'memtest',
     'section_title' => 'Memory Test.',
     'section_order' => 10,
