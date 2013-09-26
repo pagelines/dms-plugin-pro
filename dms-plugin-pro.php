@@ -4,7 +4,7 @@
 Plugin Name: DMS Professional Tools
 Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
-Version: 1.0.0
+Version: 1.1
 Author: PageLines
 PageLines: true
 

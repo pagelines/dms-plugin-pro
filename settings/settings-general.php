@@ -32,7 +32,7 @@ $wpsf_settings[] = array(
         array(
             'id' => 'cdn-url',
             'title' => 'Your CDN PULL zone.',
-            'desc' => sprintf( '<p>An example of your pullzone might be: <kbd>cdn.%s</kbd></p>', str_replace( 'http://', '', str_replace( 'www', '', str_replace( 'https://', '', site_url() ) ) ) ),
+            'desc' => sprintf( '<p>If you do not have a pull zone, or have no idea what a CDN or a pull zone is then dont enable this feature ;)<br />An example of your pullzone might be: <kbd>cdn.%s</kbd></p>', str_replace( 'http://', '', str_replace( 'www', '', str_replace( 'https://', '', site_url() ) ) ) ),
             'type' => 'text',
             'std' => site_url()
         ),
