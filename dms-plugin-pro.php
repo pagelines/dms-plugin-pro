@@ -4,7 +4,7 @@
 Plugin Name: DMS Professional Tools
 Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
-Version: 1.1
+Version: 1.2
 Author: PageLines
 PageLines: true
 
@@ -47,7 +47,7 @@ class DMSPluginPro {
 		if( '1' === $this->settings['settingsgeneral_cdn_cdn-enabled'] ) {			
 			define( 'WP_STACK_CDN_DOMAIN', $this->settings['settingsgeneral_cdn_cdn-url'] );
 			define( 'WP_STAGE', 'production' );
-			new WP_Stack_CDN_Plugin;
+			new PL_WP_Stack_CDN_Plugin;
 		}
 		new DMS_Hacks;		
 	}
