@@ -4,6 +4,10 @@ class Browser_Pro_Specific_CSS {
 	
 	function __construct() {
 		
+		// no dms? OH NOES!
+		if( ! function_exists( 'pl_detect_ie' ) )
+			return false;
+
 		global $dmspro_plugin_url;
 		
 		$this->ie_ver = pl_detect_ie();
