@@ -70,6 +70,21 @@ $wpsf_settings[] = array(
 );
 
 $wpsf_settings[] = array(
+    'section_id' => 'actionmap',
+    'section_title' => 'PageLines ActionMap Tool.',
+    'section_order' => 5,
+    'fields' => array(
+	    array(
+            'id' => 'enabled',
+            'title' => 'ActionMap',
+            'desc' => 'This tool is useful for highlighting WordPress and PageLines "actions"',
+            'type' => 'checkbox',
+            'std' => 0
+        )
+    )
+);
+
+$wpsf_settings[] = array(
     'section_id' => 'memtest',
     'section_title' => 'Memory Test.',
     'section_order' => 10,
