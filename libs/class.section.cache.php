@@ -9,7 +9,9 @@ class Sections_Cache {
 	function section_cache_init( $s, $class ) {
 	
 		global $post;
-		if( is_user_logged_in() || 'pl_area' == $s->id || 'plcolumn' == $s->id || defined( 'PL_WPORG' ) || ! isset( $post->ID )) {
+		
+		$nocache = apply_filters( 'pl_section_cache_nocache', array() );
+		if( is_user_logged_in() || 'pl_area' == $s->id || 'plcolumn' == $s->id || defined( 'PL_WPORG' ) || ! isset( $post->ID ) || in_array( $s->id, $nocache ) ) {
 			ob_start();
 			$class->section_template_load( $s );
 			return ob_get_clean();
