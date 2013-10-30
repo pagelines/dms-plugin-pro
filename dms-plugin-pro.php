@@ -104,7 +104,7 @@ class DMSPluginPro {
 
 	function actionmap() {
 		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'actionmap', 'enabled' ) ) {
-			new Action_Map;
+			new Action_Map_Pro;
 		}
 	}
 
