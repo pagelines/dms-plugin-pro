@@ -1,5 +1,5 @@
 <?php
-class Action_Map {
+class Action_Map_Pro {
 
 	function __construct() {		
 		add_action('template_redirect', array( $this, 'pl_actionmap' ) );

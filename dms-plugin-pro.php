@@ -4,7 +4,7 @@
 Plugin Name: DMS Professional Tools
 Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
-Version: 1.4
+Version: 1.4.1
 Author: PageLines
 PageLines: true
 
@@ -36,6 +36,7 @@ class DMSPluginPro {
 		add_action( 'init', array( $this, 'memcheck' ) );
 		
 		add_action( 'init', array( $this, 'actionmap' ) );
+		add_action( 'init', array( $this, 'lazyload' ) );
 		add_action( 'init', array( $this, 'load_overrides' ) );
 		add_filter( 'pagelines_global_notification', array( $this, 'pro_nag' ) );
 		
@@ -108,6 +109,12 @@ class DMSPluginPro {
 		}
 	}
 
+	function lazyload() {
+		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'lazyload', 'enabled' ) ) {
+			new LazyLoad_Images_Pro;
+		}
+	}
+	
 	function load_overrides() {
 		
 		if( ! defined( 'PL_WPORG' ) )
@@ -122,14 +129,6 @@ class DMSPluginPro {
 		if ( is_admin() )
 			new PL_WPORG_Updates_Core( PL_CORE_VERSION );
 	}
-
-	// function load_overrides_early() {
-	// 	if( ! defined( 'PL_WPORG' ) )
-	// 		return;
-	// 	
-	// 	require_once( $this->plugin_path . 'libs/class.account.php' );		
-	// 	new PL_WPORG_PLAccountPanel;
-	// }
 
 	function hiddentext($text) {
 		
@@ -149,6 +148,7 @@ class DMSPluginPro {
 		require_once( $this->plugin_path . 'libs/class.memtest.php' );
 		require_once( $this->plugin_path . 'libs/class.browsercss.php' );
 		require_once( $this->plugin_path . 'libs/class.actionmap.php' );
+		require_once( $this->plugin_path . 'libs/class.lazyload.php' );
 	}
 
     function admin_menu() {

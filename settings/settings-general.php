@@ -85,6 +85,21 @@ $wpsf_settings[] = array(
 );
 
 $wpsf_settings[] = array(
+    'section_id' => 'lazyload',
+    'section_title' => 'PageLines Lazyload.',
+    'section_order' => 6,
+    'fields' => array(
+	    array(
+            'id' => 'enabled',
+            'title' => 'LazyLoad Images',
+            'desc' => 'This tool will use javascript to lazyload images, helping to increase overall user experience.',
+            'type' => 'checkbox',
+            'std' => 0
+        )
+    )
+);
+
+$wpsf_settings[] = array(
     'section_id' => 'memtest',
     'section_title' => 'Memory Test.',
     'section_order' => 10,
