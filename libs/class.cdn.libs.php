@@ -66,7 +66,9 @@ class PL_WP_Stack_CDN_Plugin extends WP_Stack_Plugin {
 	}
 
 	public function ob( $contents ) {
-			if( defined( 'PL_WPORG' ) )
+		global $pldraft;
+
+			if( defined( 'PL_WPORG' ) || is_object( $pldraft ) && $pldraft->show_editor() )
 				return $contents;
 			else
 				return apply_filters( 'wp_stack_cdn_content', $contents, $this );
