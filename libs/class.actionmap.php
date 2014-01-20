@@ -85,8 +85,11 @@ class Action_Map_Pro {
 
 	function get_section_hooks() {
 
-		global $load_sections;
-		$available = $load_sections->pagelines_register_sections( false, true );
+		global $load_sections, $editorsections;
+		if( is_object( $load_sections ) )
+			$available = $load_sections->pagelines_register_sections( false, true );
+		else
+			$available = $editorsections->get_sections();
 
 		$sections = array();	
 		foreach( $available as $type ) {	
