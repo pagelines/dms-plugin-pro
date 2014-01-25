@@ -6,6 +6,8 @@ class Sections_Cache {
 		add_filter( 'pagelines_render_section', array( $this, 'section_cache_init' ), 10, 2 );
 	}
 
+
+	
 	function section_cache_init( $s, $class ) {
 	
 		global $post;
@@ -20,14 +22,12 @@ class Sections_Cache {
 	}
 
 	function section_cache( $s, $ttl = 3600, $class ) {
-	
-		global $post;
-		$cache_key = pl_get_cache_key();
+
 		$id = $s->meta['clone'];
 		$name = $s->id;
 
-		$key = sprintf( 'section_cache_%s_%s_%s', $cache_key, $id, $post->ID );
-	
+		$key = sprintf( 'section_cache_%s', $id );
+
 		// do cache...
 		$output = get_transient( $key );
 
@@ -40,7 +40,7 @@ class Sections_Cache {
 		ob_start();
 		$class->section_template_load( $s );
 		$output = ob_get_clean();
-		set_transient( $key, $output, $ttl );
+		set_transient( $key, $output, 3600 );
 		return $output;
 	}
 	
@@ -49,41 +49,51 @@ class Sections_Cache {
 	}
 	
 	static function cache_stats() {
+		
+		if( ! is_admin() )
+			return;
+
 		if ( '1' == wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'section_cache', 'cache-enabled' ) ) {
 			global $wpdb;
 			
+			$threshold = time() - 60;
 			
-			$stale = 0;
+			// count transient expiration records, total and expired
+			$sql = "select count(*) as `total`, count(case when option_value < '$threshold' then 1 end) as `expired`
+					from {$wpdb->options}
+					where (option_name like '\_transient\_timeout\_section\_cache\_%')";
+					$counts = $wpdb->get_row($sql);
+			
+			$query = $wpdb->get_row($sql);
+			$expired = $query->expired;
+			$count = $query->total;
 
-			$where = "option_name LIKE '\_transient_section_cache%'"; 
+			// delete expired transients, using the paired timeout record to find them
+					$sql = "
+						delete from t1, t2
+						using {$wpdb->options} t1
+						join {$wpdb->options} t2 on t2.option_name = replace(t1.option_name, '_timeout', '')
+						where (t1.option_name like '\_transient\_timeout\_section\_cache%')
+						and t1.option_value < '$threshold';
+					";
+					$wpdb->query($sql);
 			
-			$transients = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE $where" );
-			
-			$count = count( $transients );
-			
-			$cache_key = self::pl_get_cache_key();
-			
-			foreach( $transients as $k => $name ) {
-				$key = str_replace( '_transient_section_cache_', '', $name );
-				$key = explode( '_', $key );
-				if( $key[0] <> $cache_key ) {
-					$stale++;
-					delete_transient( str_replace( '_transient_', '', $name ) );
-				}
-			}
-			
-			$out = sprintf( '<br /><strong>%s</strong> total cache sections found.<br /><strong>%s</strong> stale sections were detected and deleted from the db.', $count, $stale );
+			$out = sprintf( '<br /><strong>%s</strong> total cached sections found.<br /><strong>%s</strong> stale sections were detected and deleted from the db.', $count, $expired );
 			return $out;
 		}
 	}
-	static function pl_get_cache_key() {
-
-		if ( '' != get_theme_mod( 'pl_cache_key' ) ) {
-			return get_theme_mod( 'pl_cache_key' );
-		} else { 	
-			$cache_key = substr(uniqid(), -6);
-			set_theme_mod( 'pl_cache_key', $cache_key );
-			return $cache_key;
-		}
-	}
 }
+
+	function dms_pro_cache_delete_all() {
+
+			global $wpdb;
+
+			// delete all transients
+			// including NextGEN Gallery 2.0.x display cache
+			$sql = "
+				delete from {$wpdb->options}
+				where option_name like '\_transient\_section\_cache\_%'
+				or option_name like '\_transient\_timeout\_section\_cache\_%'
+			";
+			$wpdb->query($sql);
+	}
