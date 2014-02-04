@@ -3,7 +3,6 @@ class DMS_Hacks {
 
 	function __construct() {
 		add_action( 'wp_before_admin_bar_render', array( $this, 'show_template' ) );
-		add_filter( 'render_css_posix_', '__return_true' );
 		add_action( 'dmspro_extra_settings', array( $this, 'hacks_included' ) );
 		add_filter('posts_where', array( $this, 'advanced_search_query' ) );
 	}
@@ -14,8 +13,6 @@ class DMS_Hacks {
 		?>
 		<h2>Extra Hacks enabled by this plugin</h2>
 		<ul>
-		<li><kbd>render_css_posix_</kbd> This filter forces the framework to write a CSS file if your server does not have POSIX extensions installed.</li>
-		<li><kbd>Search Enhanced  </kbd> Allows the user to search custom taxonomies AND *most* DMS sections content.
 		<li><kbd>Template: Feature</kbd> Show last loaded template name in WP adminbar.</li>
 		</ul>
 		

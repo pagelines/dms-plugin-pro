@@ -100,6 +100,21 @@ $wpsf_settings[] = array(
 );
 
 $wpsf_settings[] = array(
+    'section_id' => 'user_sections',
+    'section_title' => 'Allow Hidden Sections.',
+    'section_order' => 6,
+    'fields' => array(
+	    array(
+            'id' => 'enabled',
+            'title' => 'Add Hide Options To Sections',
+            'desc' => '',
+            'type' => 'checkbox',
+            'std' => 0
+        )
+    )
+);
+
+$wpsf_settings[] = array(
     'section_id' => 'memtest',
     'section_title' => 'Memory Test.',
     'section_order' => 10,

@@ -38,6 +38,7 @@ class DMSPluginPro {
 		add_action( 'init', array( $this, 'actionmap' ) );
 		add_action( 'init', array( $this, 'lazyload' ) );
 		add_action( 'init', array( $this, 'load_overrides' ) );
+		add_action( 'init', array( $this, 'user_sections' ) );
 		add_filter( 'pagelines_global_notification', array( $this, 'pro_nag' ) );
 
 		$this->plpro = new WordPressSettingsFramework( $this->plugin_path .'settings/settings-general.php' );
@@ -117,6 +118,12 @@ class DMSPluginPro {
 		}
 	}
 
+	function user_sections() {
+		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'user_sections', 'enabled' ) ) {
+			new Sections_User;
+		}
+	}
+
 	function load_overrides() {
 
 		if( ! defined( 'PL_WPORG' ) )
@@ -151,6 +158,7 @@ class DMSPluginPro {
 		require_once( $this->plugin_path . 'libs/class.browsercss.php' );
 		require_once( $this->plugin_path . 'libs/class.actionmap.php' );
 		require_once( $this->plugin_path . 'libs/class.lazyload.php' );
+		require_once( $this->plugin_path . 'libs/class.section.user.php' );
 	}
 
     function admin_menu() {
