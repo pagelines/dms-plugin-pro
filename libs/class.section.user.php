@@ -35,6 +35,8 @@ class Sections_User {
 
 		$extra = array();
 		$opts = $options['standard']['opts'];
+		
+		
 		$extra[] = array(
 				'key'	=> 'pro_extra_standard_opts',
 				'help'	=> 'Extra Options (Pro Tools)<br />These extra options will <strong>NOT</strong> work properly if you are using a cache plugin and have not configured it correctly.',
@@ -66,7 +68,7 @@ class Sections_User {
 					)
 				)
 			);
-		$opts = $extra + $opts;
+		$opts = array_merge( $extra, $opts );
 		$options['standard']['opts'] = $opts;
 		return $options;
 	}
