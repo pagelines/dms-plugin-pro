@@ -20,16 +20,16 @@ class DMS_Hacks {
 		echo ob_get_clean();
 	}
 	function show_template() {
-		global $wp_admin_bar, $pldraft, $plpg;
-		if( 'live' == $pldraft->mode || is_admin() )
+		global $wp_admin_bar, $pldraft, $plpg, $pl_custom_template;
+		if( ! is_object( $pldraft) || 'live' == $pldraft->mode || is_admin() )
 			return;
 
-		$template = ( false != $plpg->template && '' != $plpg->template ) ? $plpg->template : 'none';
+		$template = ( isset( $pl_custom_template['name'] ) ) ? $pl_custom_template['name'] : 'None';
 
 		$wp_admin_bar->add_menu( array(
 			'parent' => false,
 			'id' => 'page_template',
-			'title' => sprintf( '%s : %s',  __( 'Last Imported Template', 'pagelines' ), ucfirst( $plpg->template ) ),
+			'title' => sprintf( 'Template: %s',  $template ),
 			'href'	=> sprintf( '%s?tablink=page-setup', site_url() ),
 			'meta'	=> false
 		));
