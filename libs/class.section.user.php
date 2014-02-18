@@ -11,6 +11,23 @@ class Sections_User {
 
 		$hide = false;
 
+		$roles = $s->opt( 'pl_role_hide' );
+		
+		if( false !== $roles ) {
+			
+			if( ! is_user_logged_in() && in_array( 'none', $roles ) )
+				$hide = true;
+						
+			if( is_user_logged_in() ) {
+				global $current_user;
+
+				$user_roles = $current_user->roles;
+				$user_role = array_shift($user_roles);
+				if( in_array( $user_role, $roles ) )
+					$hide = true;
+			}
+		}
+
 		if( '1' === $s->opt( 'pl_standard_nouser_hide' ) && ! is_user_logged_in() )
 			$hide = true;
 
@@ -35,8 +52,20 @@ class Sections_User {
 
 		$extra = array();
 		$opts = $options['standard']['opts'];
+		$roles = array();
+		global $wp_roles;
 		
+		$all_roles = $wp_roles->roles;
+		$all_roles = apply_filters('editable_roles', $all_roles);
+		unset( $all_roles['administrator'] );
+		foreach( $all_roles as $k => $data ) {
+			$roles[$k] = array(
+				'name'	=> $data['name']
+			);
+		}	
 		
+		$roles['none'] = array( 'name' => 'Guest' );
+
 		$extra[] = array(
 				'key'	=> 'pro_extra_standard_opts',
 				'help'	=> 'Extra Options (Pro Tools)<br />These extra options will <strong>NOT</strong> work properly if you are using a cache plugin and have not configured it correctly.',
@@ -65,6 +94,12 @@ class Sections_User {
 						'type' 		=> 'check',
 						'default'	=> false,
 						'label' 	=> __( 'Hide this section for desktop users', 'pagelines' ),
+					),
+					array(
+						'key'		=> 'pl_role_hide',
+						'type' 		=> 'select_multi',
+						'label' 	=> __( 'Select usergroups to have section hidden. (admin will always see it)', 'pagelines' ),
+						'opts'		=> $roles
 					)
 				)
 			);
