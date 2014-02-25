@@ -24,7 +24,11 @@ class DMS_Hacks {
 		if( ! is_object( $pldraft) || 'live' == $pldraft->mode || is_admin() )
 			return;
 
-		$template = ( isset( $pl_custom_template['name'] ) ) ? $pl_custom_template['name'] : 'None';
+		if( class_exists( 'PLDeveloperTools' ) )
+			$template = ( isset( $pl_custom_template['name'] ) ) ? $pl_custom_template['name'] : 'None';
+		else
+			$template = ( false != $plpg->template && '' != $plpg->template ) ? $plpg->template : 'None';
+
 
 		$wp_admin_bar->add_menu( array(
 			'parent' => false,
