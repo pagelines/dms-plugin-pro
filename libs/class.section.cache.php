@@ -45,7 +45,7 @@ class Sections_Cache {
 	}
 	
 	static function cache_desc() {
-		return sprintf( '<p>This simple cache uses wp_transients to store rendered sections HTML saving a few db queries.<br />If you are using a PHP OP Cache like APC/Memcached this can make quite a difference.<br .><kbd>DISCLOSURE: THIS IS NOT GOING TO BE A MAGIC FIX FOR SERVERS MADE FROM CHEESE</kbd><br /><strong>This will only work with DMS 1.0.4 and above.</strong><br />%s</p>', self::cache_stats() );
+		return sprintf( 'By clicking this I understand it is experimental and not really supported.<br /><p>This simple <strong style="color:red">EXPERIMENTAL</strong> cache uses wp_transients to store rendered sections HTML saving a few db queries.<br />If you are using a PHP OP Cache like APC/Memcached this can make quite a difference.<br .><kbd><strong style="color:red">!!DISCLOSURE!!</strong> THIS IS NOT GOING TO BE A MAGIC FIX FOR SERVERS MADE FROM CHEESE</kbd><br /><strong>This will only work with DMS 1.0.4 and above.</strong><br />%s</p>', self::cache_stats() );
 	}
 	
 	static function cache_stats() {
