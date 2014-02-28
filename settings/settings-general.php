@@ -115,6 +115,21 @@ $wpsf_settings[] = array(
 );
 
 $wpsf_settings[] = array(
+    'section_id' => 'gfonts',
+    'section_title' => 'Enable All Googlefonts.',
+    'section_order' => 7,
+    'fields' => array(
+	    array(
+            'id' => 'enabled',
+            'title' => 'Enable All Googlefonts.',
+            'desc' => get_gfont_desc(),
+            'type' => 'checkbox',
+            'std' => 0
+        )
+    )
+);
+
+$wpsf_settings[] = array(
     'section_id' => 'memtest',
     'section_title' => 'Memory Test.',
     'section_order' => 10,
@@ -128,3 +143,10 @@ $wpsf_settings[] = array(
         )
     )
 );
+function get_gfont_desc(){
+	$a = 'This option will add 657 Googlefonts into the DMS typography options just like the old googlefonts plugin for PageLines Framework';
+	if( class_exists( 'Google_Fonts' ) ) {
+		$a .= '<br/><strong>WARNING We detected the old plugin, disable it before using this option!</strong>';
+	}
+	return $a;
+}
