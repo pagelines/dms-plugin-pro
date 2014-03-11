@@ -88,6 +88,11 @@ class Browser_Pro_Specific_CSS {
 
 	function is_opera_mobile() {
 		
+		return(preg_match('/opera\smobi/i',$this->useragent));
+	}
+	
+	function is_opera_mini() {
+		
 		return(preg_match('/opera\smini/i',$this->useragent));
 	}
 
@@ -197,7 +202,7 @@ class Browser_Pro_Specific_CSS {
 	***************************************************************/
 
 	function is_handheld() {
-		return($this->is_iphone() || $this->is_ipad() || $this->is_ipod() || $this->is_android() || $this->is_blackberry() || $this->is_opera_mobile() || $this->is_palm() || $this->is_symbian() || $this->is_windows_mobile() || $this->is_lg() || $this->is_motorola() || $this->is_nokia() || $this->is_samsung() || $this->is_samsung_galaxy_tab() || $this->is_sony_ericsson() || $this->is_nintendo());
+		return($this->is_iphone() || $this->is_ipad() || $this->is_ipod() || $this->is_android() || $this->is_blackberry() || $this->is_opera_mobile() || $this->is_opera_mini() || $this->is_palm() || $this->is_symbian() || $this->is_windows_mobile() || $this->is_lg() || $this->is_motorola() || $this->is_nokia() || $this->is_samsung() || $this->is_samsung_galaxy_tab() || $this->is_sony_ericsson() || $this->is_nintendo());
 	}
 
 	/***************************************************************
@@ -207,7 +212,7 @@ class Browser_Pro_Specific_CSS {
 
 	function is_mobile() {
 		if ($this->is_tablet()) { return false; }  // this catches the problem where an Android device may also be a tablet device
-		return($this->is_iphone() || $this->is_ipod() || $this->is_android() || $this->is_blackberry() || $this->is_opera_mobile() || $this->is_palm() || $this->is_symbian() || $this->is_windows_mobile() || $this->is_lg() || $this->is_motorola() || $this->is_nokia() || $this->is_samsung() || $this->is_sony_ericsson() || $this->is_nintendo());
+		return($this->is_iphone() || $this->is_ipod() || $this->is_android() || $this->is_blackberry() || $this->is_opera_mobile() || $this->is_opera_mini() || $this->is_palm() || $this->is_symbian() || $this->is_windows_mobile() || $this->is_lg() || $this->is_motorola() || $this->is_nokia() || $this->is_samsung() || $this->is_sony_ericsson() || $this->is_nintendo());
 	}
 
 	/***************************************************************
@@ -248,6 +253,7 @@ class Browser_Pro_Specific_CSS {
 		if ($this->is_android()) { $classes[] = 'android'; };
 		if ($this->is_blackberry()) { $classes[] = 'blackberry'; };
 		if ($this->is_opera_mobile()) { $classes[] = 'opera-mobile';}
+		if ($this->is_opera_mini()) { $classes[] = 'opera-mini';}
 		if ($this->is_palm()) { $classes[] = 'palm';}
 		if ($this->is_symbian()) { $classes[] = 'symbian';}
 		if ($this->is_windows_mobile()) { $classes[] = 'windows-mobile'; }
