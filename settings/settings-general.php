@@ -62,7 +62,7 @@ $wpsf_settings[] = array(
 	    array(
             'id' => 'enabled',
             'title' => 'Search',
-            'desc' => 'Enable WordPress search to look inside section content, eg. textbox/hero/etc.',
+            'desc' => 'Enable WordPress search to look inside section content, eg. textbox/hero/etc.<br />Not working in 2.0 yet.',
             'type' => 'checkbox',
             'std' => 1
         )
@@ -107,7 +107,7 @@ $wpsf_settings[] = array(
 	    array(
             'id' => 'enabled',
             'title' => 'Add Hide Options To Sections',
-            'desc' => '',
+            'desc' => 'Adds special options to sections that allow you to show sections only to various users/groups.',
             'type' => 'checkbox',
             'std' => 0
         )
