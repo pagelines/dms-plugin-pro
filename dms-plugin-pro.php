@@ -4,7 +4,7 @@
 Plugin Name: DMS Professional Tools
 Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
-Version: 1.5.2
+Version: 1.5.3
 Author: PageLines
 PageLines: true
 
@@ -173,8 +173,8 @@ class DMSPluginPro {
 
 		// if( defined( 'PL_WPORG' ) )
 		// 	return false;
-        $page_hook = add_menu_page( __( 'PageLines PRO', $this->l10n ), __( 'PageLines PRO', $this->l10n ), 'update_core', 'plpro', array(&$this, 'settings_page') );
-        add_submenu_page( 'plpro', __( 'Settings', $this->l10n ), __( 'Settings', $this->l10n ), 'update_core', 'plpro', array(&$this, 'settings_page') );
+        $page_hook = add_menu_page( __( 'PageLines PRO', $this->l10n ), __( 'PageLines PRO', $this->l10n ), 'activate_plugins', 'plpro', array(&$this, 'settings_page') );
+        add_submenu_page( 'plpro', __( 'Settings', $this->l10n ), __( 'Settings', $this->l10n ), 'activate_plugins', 'plpro', array(&$this, 'settings_page') );
     }
     function settings_page()
 	{
