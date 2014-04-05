@@ -13,7 +13,18 @@ $wpsf_settings[] = array(
             'desc' => '<p>This will add classes to the page, for example a desktop PC using firefox would add: <kbd>&lt;body class="home blog ... ... <strong>desktop firefox</strong>"&gt;</kbd><br />Also included are patches supplied by Anca for IE8.'  . dmspro_browsercss_compat() . '<br /><kbd>DISCLAMIER</kbd> These patches will <strong>NOT</strong> magically fix all sites to work with old unsupported browsers, but it helps.</p>',
             'type' => 'checkbox',
             'std' => 0
-        )
+        ),
+		array(
+			'id' => 'css-type',
+			'title' => 'Browser Detection',
+			'desc' => 'Default is PHP scripts to detect browsers and add the class.<br />Some hosts use Uber caches so the jQuery method might give you better results.',
+			'type' => 'radio',
+			'std' => 'php',
+			'choices' => array(
+				'php' => 'PHP Mode',
+				'js' => 'Jquery Mode',
+					)
+				),
     )
 );
 
