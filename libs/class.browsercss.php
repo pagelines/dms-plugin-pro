@@ -15,7 +15,7 @@ class Browser_Pro_Specific_CSS {
 		
 		$settings = wpsf_get_settings( '../settings/settings-general.php' );
 		
-		if( 'js' == $settings['settingsgeneral_browsercss_css-type'] ) {
+		if( isset( $settings['settingsgeneral_browsercss_css-type'] ) && 'js' == $settings['settingsgeneral_browsercss_css-type'] ) {
 			wp_register_script( 'browser-detect', $dmspro_plugin_url . 'libs/js/browser.js', array( 'jquery' ) );		
 			wp_enqueue_script( 'browser-detect');
 			wp_register_script( 'html5-js', $dmspro_plugin_url . 'libs/js/html5.min.js', 0, false);			
