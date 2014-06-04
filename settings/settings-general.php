@@ -50,20 +50,20 @@ $wpsf_settings[] = array(
     )
 );
 
-$wpsf_settings[] = array(
-    'section_id' => 'section_cache',
-    'section_title' => 'Section Caching.',
-    'section_order' => 3,
-    'fields' => array(
-	    array(
-            'id' => 'cache-enabled',
-            'title' => 'Section Cache',
-            'desc' => Sections_Cache::cache_desc(),
-            'type' => 'checkbox',
-            'std' => 0
-        )
-    )
-);
+// $wpsf_settings[] = array(
+//     'section_id' => 'section_cache',
+//     'section_title' => 'Section Caching.',
+//     'section_order' => 3,
+//     'fields' => array(
+// 	    array(
+//             'id' => 'cache-enabled',
+//             'title' => 'Section Cache',
+//             'desc' => Sections_Cache::cache_desc(),
+//             'type' => 'checkbox',
+//             'std' => 0
+//         )
+//     )
+// );
 
 $wpsf_settings[] = array(
     'section_id' => 'search',

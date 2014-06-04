@@ -101,16 +101,16 @@ class Sections_User {
 						'label' 	=> __( 'Select usergroups to have section hidden. (admin will always see it)', 'pagelines' ),
 						'opts'		=> $roles
 					),
-					array(
-						'key'		=> 'pl_hide_date_start',
-						'type' 		=> 'select_date',
-						'label' 	=> __( 'Start showing from this date', 'pagelines' ),
-					),
-					array(
-						'key'		=> 'pl_hide_date_finish',
-						'type' 		=> 'select_date',
-						'label' 	=> __( 'Stop showing at this date', 'pagelines' ),
-					)
+					// array(
+					// 	'key'		=> 'pl_hide_date_start',
+					// 	'type' 		=> 'select_date',
+					// 	'label' 	=> __( 'Start showing from this date', 'pagelines' ),
+					// ),
+					// array(
+					// 	'key'		=> 'pl_hide_date_finish',
+					// 	'type' 		=> 'select_date',
+					// 	'label' 	=> __( 'Stop showing at this date', 'pagelines' ),
+					// )
 				)
 			);
 		$opts = array_merge( $extra, $opts );
