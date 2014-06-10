@@ -73,11 +73,13 @@ jQuery Browser Plugin
 		};
 
 		if (!z) {			
-			$('html').addClass([$.os.name, $.browser.name, $.browser.className, $.layout.name, $.layout.className].join(' '));
+			$('body').addClass([$.os.name, $.browser.name.replace('ms', ''), $.browser.className.replace('ms', '')].join(' '));
 		}
 	};
-
-	$.browserTest(navigator.userAgent);	
+	$( document ).ready(function() {
+	  $.browserTest(navigator.userAgent);	
+	});
+	
 })(jQuery);
 
 
