@@ -72,7 +72,7 @@ class DMS_Hacks {
 
 	function advanced_search_query( $where ) {
 
-		if( version_compare( CORE_VERSION, '2.0', '>' ) ) {
+		if( ! defined( 'CORE_VERSION' ) || version_compare( CORE_VERSION, '2.0', '>' ) ) {
 			return $where;
 		}
 
