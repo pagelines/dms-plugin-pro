@@ -25,6 +25,10 @@ class LazyLoad_Images_Pro {
 		if( is_feed() || ( function_exists( 'is_mobile' ) && is_mobile() ) || isset( $_GET['preview'] ) )
 			return $content;
 
+		// dont lazyload woo cart images.
+		if( false !== strpos( $content, 'attachment-shop_thumbnail' ) )
+			return $content;
+
 		// In case you want to change the placeholder image
 		$image = apply_filters( 'lazyload_images_placeholder_image', $this->get_url( '/libs/images/1x1.trans.gif' ) );
 

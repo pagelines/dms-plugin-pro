@@ -4,7 +4,7 @@
 Plugin Name: DMS Professional Tools
 Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
-Version: 1.6.2
+Version: 1.7
 Author: PageLines
 PageLines: true
 
@@ -40,7 +40,7 @@ class DMSPluginPro {
 		add_action( 'init', array( $this, 'load_overrides' ) );
 		add_action( 'init', array( $this, 'user_sections' ) );
 		add_action( 'admin_init', array( $this, 'bulk' ) );
-		
+
 		add_action( 'init', array( $this, 'gfonts' ) );
 		add_filter( 'pagelines_global_notification', array( $this, 'pro_nag' ) );
 
@@ -132,13 +132,13 @@ class DMSPluginPro {
 			new Google_Fonts_Pro;
 		}
 	}
-	
+
 	function bulk() {
 		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'bulk_edit', 'enabled' ) ) {
 			new PL_Bulk_edit;
 		}
 	}
-	
+
 	function load_overrides() {
 
 		if( ! defined( 'PL_WPORG' ) )

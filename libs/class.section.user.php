@@ -9,6 +9,9 @@ class Sections_User {
 
 	function section_user_check( $s, $class ) {
 
+		if( ! is_object( $s ) )
+			return false;
+
 		$hide = false;
 
 		$roles = $s->opt( 'pl_role_hide' );
