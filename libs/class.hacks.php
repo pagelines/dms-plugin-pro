@@ -63,7 +63,7 @@ class DMS_Hacks {
 			$wp_admin_bar->add_menu( array(
 				'parent' => false,
 				'id' => 'page_template',
-				'title' => sprintf( 'Mode: %s | Template: %s', ucwords( $mode ), ucwords( $template ) ),
+				'title' => sprintf( 'Type ID: %s | Mode: %s | Template: %s', $plpg->type_name, ucwords( $mode ), ucwords( $template ) ),
 				'href'	=> sprintf( '%s?tablink=page-setup', site_url() ),
 				'meta'	=> false
 			));
