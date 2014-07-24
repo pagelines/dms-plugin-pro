@@ -99,7 +99,7 @@ class PL_Bulk_edit {
 
 		ob_start(); ?>
 
-		<select id="pl-template-selecter">
+		<select class="pl-template-selecter">
 			<?php
 			printf('<option class="pl-template-select" value="none">%s</option>', __( 'Select a PageLines Template', 'pagelines' ) );
 			printf('<option class="pl-template-select" value="none">%s</option>', __( 'Unset Current Template', 'pagelines' ) );
@@ -115,21 +115,22 @@ class PL_Bulk_edit {
 	      jQuery(document).ready(function() {
 	        jQuery('<option>').val('pl-template').text('<?php _e( 'Apply Template', 'pagelines' );?>').appendTo("select[name='action']");
 	       	jQuery('<option>').val('pl-template').text('<?php _e( 'Apply Template', 'pagelines' );?>').appendTo("select[name='action2']");
-			jQuery('<input type="hidden" id="selected-template" name="selected-template" value="none" />').appendTo( '#posts-filter')
-			jQuery('<input type="hidden" id="selected-template-name" name="selected-template-name" value="none" />').appendTo( '#posts-filter')
-			jQuery('<input type="hidden" id="pl-post-type" name="pl-post-type" value="<?php echo $post_type; ?>" />').appendTo( '#posts-filter')
+			jQuery('<input type="hidden" class="selected-template" name="selected-template" value="none" />').appendTo( '#posts-filter')
+			jQuery('<input type="hidden" class="selected-template-name" name="selected-template-name" value="none" />').appendTo( '#posts-filter')
+			jQuery('<input type="hidden" class="pl-post-type" name="pl-post-type" value="<?php echo $post_type; ?>" />').appendTo( '#posts-filter')
 	      });
 		jQuery('.bulkactions').after('<?php echo $select; ?>')
 
-		jQuery( '#pl-template-selecter').on('change', function() {
-			var sel = jQuery(this).val()
-			var name = jQuery('#pl-template-selecter option:selected').attr('data-nicename');
-			jQuery('#selected-template').val(sel)
-			jQuery('#selected-template-name').val(name)
-		})
+		jQuery( '.pl-template-selecter').each( function(e) {
+			jQuery(this).on('change', function() {
+				var sel = jQuery(this).val()
+				var name = jQuery('option:selected', this).attr('data-nicename');
+				jQuery('.selected-template').val(sel)
+				jQuery('.selected-template-name').val(name)
+			})
+		})		
 	    </script>
 	    <?php
 	  }
 	}
-	
 }
