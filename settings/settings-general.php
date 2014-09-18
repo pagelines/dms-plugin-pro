@@ -73,7 +73,7 @@ $wpsf_settings[] = array(
 	    array(
             'id' => 'enabled',
             'title' => 'Search',
-            'desc' => 'Enable WordPress search to look inside section content, eg. textbox/hero/etc. <strong>DMS1 Only</strong>',
+            'desc' => 'Enable WordPress search to look inside section content, eg. textbox/hero/etc. <strong>DMS2 Only</strong>',
             'type' => 'checkbox',
             'std' => 0
         )
