@@ -2,9 +2,30 @@
 class DMS_Hacks {
 
 	function __construct() {
+		
 		add_action( 'wp_before_admin_bar_render', array( $this, 'show_template' ) );
 		add_action( 'dmspro_extra_settings', array( $this, 'hacks_included' ) );
 		add_filter('posts_where', array( $this, 'advanced_search_query' ) );
+		
+		add_action( 'after_setup_theme', array( $this, 'maybe_load_scripts' ) );		
+	}
+
+	function validator_init( $s, $class ) {
+		
+		add_action( 'pagelines_outer_' . $s->id, array( $this, 'hidden_h' ) );
+		ob_start();
+		$class->section_template_load( $s );
+		return ob_get_clean();
+	}
+	
+	function hidden_h() {
+		echo '<h6 class="hidden">&nbsp;</h6>';
+	}
+
+	function maybe_load_scripts() {
+		
+		if( ! has_filter( 'pagelines_render_section' ) )
+			add_filter( 'pagelines_render_section', array( $this, 'validator_init' ), 999, 2 );		
 	}
 
 	function hacks_included() {
@@ -14,18 +35,24 @@ class DMS_Hacks {
 		<h2>Extra Hacks enabled by this plugin</h2>
 		<ul>
 		<li><kbd>Template: Feature</kbd> Show last loaded template name in WP adminbar.</li>
+		<li><kbd>Sections: HTML5</kbd> Hidden H6 inserted to validate pages.</li>
 		</ul>
 
 		<?php
 		echo ob_get_clean();
 	}
 	function show_template() {
+
 		if( is_admin() )
 			return false;
+
 		global $wp_admin_bar, $pldraft, $plpg, $pl_custom_template, $post;
+			
+		
+		
 		if( version_compare( CORE_VERSION, '2.1', '<' ) ) {
 
-			if( ! is_object( $pldraft) || 'live' == $pldraft->mode || is_admin() )
+			if( ! is_object( $pldraft ) || 'live' == $pldraft->mode || is_admin() )
 				return;
 
 			if( class_exists( 'PLDeveloperTools' ) )
@@ -43,6 +70,9 @@ class DMS_Hacks {
 			));
 		} else {
 
+			if( ! class_exists( 'PageLinesPage' ) )
+				return false;
+
 			$page_handler = new PageLinesPage;
 			if( $page_handler->is_special() )
 				$id = $page_handler->special_index_lookup();
@@ -57,14 +87,22 @@ class DMS_Hacks {
 			if( 'local' != $mode )
 				$id = $page_handler->special_index_lookup();
 
+			$type_name = $page_handler->type_name;
+
 			$set = pl_meta( $id, PL_SETTINGS );
 			$template = ( is_array( $set ) && isset( $set['live']['custom-map']['template']['ctemplate'] ) ) ? $set['live']['custom-map']['template']['ctemplate'] : 'Default';
+
+			$template = strlen( $template ) > 15
+			? substr( $template,0,15 ) . '...'
+			: $template;
+
+			$meta = sprintf( 'Mode: %s | Current Type: %s | Template: %s', ucwords( $mode ), $type_name, ucwords( $template ) );
 
 			$wp_admin_bar->add_menu( array(
 				'parent' => false,
 				'id' => 'page_template',
-				'title' => sprintf( 'Mode: %s | Template: %s', ucwords( $mode ), ucwords( $template ) ),
-				'href'	=> sprintf( '%s?tablink=page-setup', site_url() ),
+				'title' => $meta,
+				'href'	=> false,
 				'meta'	=> false
 			));
 		}
@@ -72,7 +110,7 @@ class DMS_Hacks {
 
 	function advanced_search_query( $where ) {
 
-		if( ! defined( 'CORE_VERSION' ) || version_compare( CORE_VERSION, '2.0', '>' ) ) {
+		if( ! defined( 'CORE_VERSION' ) || version_compare( CORE_VERSION, '2.1', '<' ) ) {
 			return $where;
 		}
 
@@ -82,12 +120,33 @@ class DMS_Hacks {
 	    $query = get_search_query();
 	    $query = like_escape( $query );
 
-	    // include postmeta in search
-	     $where .=" OR {$wpdb->posts}.ID IN (SELECT {$wpdb->postmeta}.post_id FROM {$wpdb->posts}, {$wpdb->postmeta} WHERE {$wpdb->postmeta}.meta_key = 'pl-settings' AND {$wpdb->postmeta}.meta_value LIKE '%$query%' AND {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id)";
-
-	     // include taxonomy in search
-	    $where .=" OR {$wpdb->posts}.ID IN (SELECT {$wpdb->posts}.ID FROM {$wpdb->posts},{$wpdb->term_relationships},{$wpdb->terms} WHERE {$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id AND {$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->terms}.term_id AND {$wpdb->terms}.name LIKE '%$query%')";
+		$result = $this->search_sections( $query );		
+		$where .=" OR {$wpdb->posts}.ID IN ( '$result' )";
+		
 		}
 	    return $where;
+	}
+	
+	
+	function search_sections( $term ) {
+		
+		$result = $this->search_sections_query( $term );	
+		return implode( ',', $result );
+	}
+	
+	function search_sections_query( $term ) {
+
+		global $wpdb;
+		$query = sprintf( "SELECT post_id from wp_postmeta where meta_key = 'pl-settings' and meta_value LIKE concat( '%%', ( SELECT uid FROM wp_pl_data_sections WHERE live LIKE '%s'  order by id DESC limit 1 ), '%%')", '%' . $term . '%' );
+
+		$result = $wpdb->get_results( $query );
+	
+		$results = array();
+
+		foreach( $result as $k => $id ) {			
+			if( $id->post_id < 70000000 )
+				$results[] = $id->post_id;
+		}		
+		return $results;
 	}
 }
