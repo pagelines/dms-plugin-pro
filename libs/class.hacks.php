@@ -7,7 +7,7 @@ class DMS_Hacks {
 		add_action( 'dmspro_extra_settings', array( $this, 'hacks_included' ) );
 		add_filter('posts_where', array( $this, 'advanced_search_query' ) );
 		
-		add_action( 'after_setup_theme', array( $this, 'maybe_load_scripts' ) );		
+	//	add_action( 'after_setup_theme', array( $this, 'maybe_load_scripts' ) );		
 	}
 
 	function validator_init( $s, $class ) {
