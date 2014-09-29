@@ -17,6 +17,13 @@ class PL_Bulk_edit {
 		add_action('admin_footer-edit.php', array( $this, 'pl_custom_bulk_admin_footer') );
 		add_action('load-edit.php', array( $this, 'pl_custom_bulk_action') );
 		add_action('admin_notices', array( $this, 'pl_custom_bulk_admin_notices') );
+		add_filter( 'manage_edit-post_sortable_columns', array( $this, 'sortable_columns' ) );
+		add_filter( 'manage_edit-page_sortable_columns', array( $this, 'sortable_columns' ) );
+	}
+	
+	function sortable_columns( $sortable_columns ) {
+		$sortable_columns[ 'pl-template' ] = 'pl-template';
+		return $sortable_columns;
 	}
 	
 	function upgrade_required() {
