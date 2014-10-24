@@ -137,7 +137,7 @@ class DMS_Hacks {
 	function search_sections_query( $term ) {
 
 		global $wpdb;
-		$query = sprintf( "SELECT post_id from wp_postmeta where meta_key = 'pl-settings' and meta_value LIKE concat( '%%', ( SELECT uid FROM wp_pl_data_sections WHERE live LIKE '%s'  order by id DESC limit 1 ), '%%')", '%' . $term . '%' );
+		$query = sprintf( "SELECT post_id from %spostmeta where meta_key = 'pl-settings' and meta_value LIKE concat( '%%', ( SELECT uid FROM %spl_data_sections WHERE live LIKE '%s'  order by id DESC ), '%%')", $wpdb->prefix, $wpdb->prefix, '%' . $term . '%' );
 
 		$result = $wpdb->get_results( $query );
 	
