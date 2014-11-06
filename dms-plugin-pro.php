@@ -4,7 +4,7 @@
 Plugin Name: DMS Professional Tools
 Plugin URI: http://www.pagelines.com/
 Description: Pro member code and utilities for PageLines DMS.
-Version: 1.8.3
+Version: 1.8.4
 Author: PageLines
 PageLines: true
 
@@ -21,8 +21,8 @@ class DMSPluginPro {
 	function __construct() {
 
 		global $dmspro_plugin_url;
-        $this->plugin_path = plugin_dir_path( __FILE__ );
-        $this->plugin_url = plugin_dir_url( __FILE__ );
+		$this->plugin_path = plugin_dir_path( __FILE__ );
+		$this->plugin_url = plugin_dir_url( __FILE__ );
 		$dmspro_plugin_url = $this->plugin_url;
 
 		$this->l10n = 'wp-settings-framework';
@@ -30,7 +30,7 @@ class DMSPluginPro {
 
 		add_action( 'admin_init', array( $this, 'fix_wporg' ), 9 );
 
-        add_action( 'admin_menu', array( $this, 'admin_menu'), 99 );
+    add_action( 'admin_menu', array( $this, 'admin_menu'), 99 );
 		add_action( 'template_redirect', array( $this, 'section_cache' ) );
 		add_action( 'template_redirect', array( $this, 'browsercss' ) );
 		add_action( 'init', array( $this, 'memcheck' ) );
@@ -40,7 +40,7 @@ class DMSPluginPro {
 		add_action( 'init', array( $this, 'load_overrides' ) );
 		add_action( 'init', array( $this, 'user_sections' ) );
 		add_action( 'admin_init', array( $this, 'bulk' ) );
-
+		add_action( 'init', array( $this, 'sections_admin' ) );
 		add_action( 'init', array( $this, 'gfonts' ) );
 		add_filter( 'pagelines_global_notification', array( $this, 'pro_nag' ) );
 
