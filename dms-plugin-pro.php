@@ -97,6 +97,12 @@ class DMSPluginPro {
 		}
 	}
 
+	function sections_admin() {
+		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'advanced', 'sections_admin' ) ) {
+			new PL_Pro_Sections_Admin;
+		}
+	}
+
 	function browsercss() {
 		if( '1' === wpsf_get_setting( wpsf_get_option_group( '../settings/settings-general.php' ), 'browsercss', 'enabled' ) ) {
 			new Browser_Pro_Specific_CSS;
@@ -176,6 +182,7 @@ class DMSPluginPro {
 		require_once( $this->plugin_path . 'libs/class.section.user.php' );
 		require_once( $this->plugin_path . 'libs/class.gfonts.php' );
 		require_once( $this->plugin_path . 'libs/class.bulk.php' );
+		require_once( $this->plugin_path . 'libs/class.sections.admin.php' );
 	}
 
     function admin_menu() {

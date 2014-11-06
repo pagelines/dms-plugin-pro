@@ -141,19 +141,28 @@ $wpsf_settings[] = array(
 );
 
 $wpsf_settings[] = array(
-    'section_id' => 'memtest',
-    'section_title' => 'Memory Test.',
+    'section_id' => 'advanced',
+    'section_title' => 'Advanced',
     'section_order' => 10,
     'fields' => array(
 	    array(
-            'id' => 'enabled',
-            'title' => 'MemTest',
+            'id' => 'memtest',
+            'title' => 'Memory Test',
             'desc' => PL_Memcheck::desc(),
             'type' => 'checkbox',
             'std' => 0
-        )
+        ),
+        array(
+              'id' => 'sections_admin',
+              'title' => 'Sections Admin',
+              'desc' => 'List all sections in database, remove unused/broken sections.',
+              'type' => 'checkbox',
+              'std' => 0
+          )
     )
 );
+
+
 function get_gfont_desc(){
 	$a = 'This option will add 657 Googlefonts into the DMS typography options just like the old googlefonts plugin for PageLines Framework';
 	if( class_exists( 'Google_Fonts' ) ) {
